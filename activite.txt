@@ -1,0 +1,15 @@
+Activité
+========
+
+PIC
+---
+
+* Jenkins
+* Redmine
+
+
+Divers
+------
+
+* Réplication MySQL master/slave
+
