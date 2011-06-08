@@ -31,6 +31,8 @@ PIC
 - Formation Subversion + JIRA chez Rexel
 - Livre blanc
 - Synchronisation de mirroirs SVN pour Rexel
+- Selenium
+  - Spir
 
 
 Interconnexion
@@ -53,4 +55,6 @@ Divers
 - Supervision avec Centreon
 - Avant-vente et chiffrage
   - Mise en haute dispo de l'ESB Talend pour l'ANCV
+  - CG46
 - Audit de code Linbox-Converter pour Renault
+
