@@ -36,7 +36,7 @@ C'est la combinaison de ces deux paramètres qui permet une génération et une 
 \subsection{Contexte de la mission}
 
 \paragraph{}
-Au courant de l'année 2010, la Commission nationale de l'informatique et des libertés\footnote{La CNIL est une autorité administrative indépendante française.Elle est chargée de veiller à ce que l'informatique soit au service du citoyen et qu'elle ne porte atteinte ni à l'identité humaine, ni aux droits de l'homme, ni à la vie privée, ni aux libertés individuelles ou publiques.\cite{cnil}} (CNIL) décide d'ouvrir son portail \aintranet{} pour certains de ses utilisateurs : les commissaires.
+Au courant de l'année 2010, la Commission nationale de l'informatique et des libertés\footnote{La CNIL est une autorité administrative indépendante française.Elle est chargée de veiller à ce que l'informatique soit au service du citoyen et qu'elle ne porte atteinte ni à l'identité humaine, ni aux droits de l'homme, ni à la vie privée, ni aux libertés individuelles ou publiques.~\cite{cnil}} (CNIL) décide d'ouvrir son portail \aintranet{} pour certains de ses utilisateurs : les commissaires.
 Au nombre d'une vingtaine, ceux-ci ont besoin d'accéder au contenu du site web à l'extérieur de leur lieu de travail, à la maison par exemple.
 
 \paragraph{}
@@ -87,7 +87,7 @@ La \reffigure{linotp:linotp-archi} illustre l'architecture modulaire de \alinotp
 
 \begin{figure}
 	\centering
-	\includegraphics[width=12cm]{linotp/linotp-archi}
+	\includegraphics[width=10cm]{linotp/linotp-archi}
 	\caption{Architecture modulaire de \alinotp{}~2}
 	\label{figure:linotp:linotp-archi}
 \end{figure}
@@ -151,10 +151,58 @@ Par ailleurs, la capitalisation s'est concrétisée côté \asmile{} par une pag
 \subsection{Architecture du prototype}
 \label{section:linotp:prototype}
 
-TODO
+\paragraph{}
+Mon prototype a été mis en place sur une machine virtuelle Virtual~Box.
+Ce type de machine virtuelle a l'avantage d'être portable et d'être facilement copié ou déplacé sur plusieurs ordinateurs différents.
+C'était donc le format idéal pour effectuer les deux présentations du prototype.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{linotp/archi-proto}
+	\caption{Architecture du prototype \alinotp}
+	\label{figure:linotp:archi-proto}
+\end{figure}
+
+\paragraph{Architecture}
+L'architecture est illustrée en \reffigure{linotp:archi-proto}.
+Elle a été mise en place sur un système \alinux{} Debian.
+
+Le portail \aintranet{} \atypo{} est symbolisé par une simple page web hébergée sur un serveur HTTP Apache.
+Elle est accessible depuis l'intérieur du réseau \aintranet{} sur le port 8080.
+Ce port n'est pas accessible depuis l'extérieur.
+
+Au contraire, le port 80 du serveur Apache peut être contacté depuis \ainternet.
+Un \arp{} est alors configuré : l'intérêt est de faire passer l'utilisateur par intermédiaire de ce serveur HTTP pour accéder à la page accessible en interne sur le port 8080.
+Celle-ci reste donc toujours isolée de l'extérieur.
+
+Une authentification HTTP Basic\footnote{Dans le cadre d'une transaction HTTP, l'authentification Basic est une méthode permettant de fournir un identifiant et un mot de passe lors d'une requête. Ce couple est fourni via les en-têtes de la requête HTTP.~\cite{httpbasic}} est mise en place sur ce \arp{}.
+Quand l'utilisateur a entré son identifiant et son mot de passe issu d'un OTP, le module Apache \amodpam{} prend le relai et réalise une authentification PAM\footnote{Pluggable Authentication Modules (en abrégé PAM) est un mécanisme permettant d'intégrer différents schémas d'authentification de bas niveau dans une API de haut niveau, permettant de ce fait de rendre indépendants du schéma les logiciels réclamant une authentification. PAM est une création de Sun Microsystems et est supporté en 2006 sur les architectures Solaris, \alinux, FreeBSD, NetBSD, AIX et HP-UX.~\cite{pam}}.
+Ainsi, on filtre les utilisateurs de façon à ce que seuls ceux qui ont été acceptés par \alinotp{} puissent rentrer.
+
+En effet, un serveur \alinotp{} Community Edition est mis en place, car nous ne disposions pas encore des licences pour la version Enterprise.
+Une entrée PAM du système -- contactée par \amodpam{} -- est configurée pour utiliser le module PAM de LinOTP.
+En outre, la base d'utilisateurs est simplement représentée par le fichier \texttt{/etc/passwd} du système \alinux. 
+
+Enfin, les utilisateurs utilisent un client \amotp{}\footnote{e.g. DroidOTP sur un téléphone Android} sur leur smartphone pour générer leurs OTP : nous n'avions pas non plus de vrais tokens OTP à notre disposition.
+
+\paragraph{Scénario d'utilisation}
+L'authentification sur le prototype avec un client \amotp{} se déroule de la façon suivante :
+
+\begin{enumerate}
+	\item l'utilisateur contacte le \arp{} depuis \ainternet{} sur le port 80 grâce à son navigateur web ;
+	\item une authentification HTTP de type Basic est demandée à l'utilisateur sur son navigateur ;
+	\item l'utilisateur rentre son PIN \amotp{} personnel dans l'application \amotp{} sur son smartphone ;
+	\item il obtient alors un OTP qui, précédé par son PIN OTP personnel, forme son mot de passe ;
+	\item l'utilisateur s'authentifie dans son navigateur grâce à son identifiant et son mot de passe ;
+	\item le \arp{} valide l'authentification, émet une requête HTTP sur le port 8080 pour récupérer la page web en interne ;
+	\item le \arp{} retourne la page web a l'utilisateur qui la visualise dans son navigateur web.
+\end{enumerate}
+
 
 \subsection{Architecture mise en place}
 \label{section:linotp:archi-finale}
 
+
+Le portail \aintranet{} \atypo{} conserve sa base d'utilisateurs existante qui est liée 
 TODO
 
