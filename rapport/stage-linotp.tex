@@ -44,7 +44,7 @@ La CNIL avait déjà fait appel aux prestations de \asmile{} pour bénéficier d
 C'est pour cela qu'elle a également choisi \asmile{} pour mettre en place l'architecture permettant un tel accès depuis l'extérieur.
 
 \paragraph{}
-C'est la CNIL elle-même qui a choisi le type d'autentification à utiliser : les OTP.
+C'est la CNIL elle-même qui a choisi le type d'authentification à utiliser : les OTP.
 \asmile{} a alors proposé fin 2010 l'utilisation d'une solution de la marque RSA, leader sur ce marché.
 Pour des raisons qui sont restées inconnues -- le nombre de licences commandées était trop faible ? -- RSA n'a pas daigné répondre aux commandes de licences et de matériel réalisées par \asmile.
 
@@ -72,7 +72,7 @@ Par ailleurs, \alinotp{} se décline en deux éditions :
 
 \begin{itemize}
 	\item l'édition Community, libre et gratuite, qui propose des fonctions de bases pour mettre en place une maquette ;
-	\item l'édition Enterprise, pour laquelle il faut acheter des licences en fonction du nombre de tokens utilisés, propose un vraie solution pour des besoins d'entreprise, avec notamment le support LDAP, Active Directory, SQL ou encore \afreerad{}.
+	\item l'édition Enterprise, pour laquelle il faut acheter des licences en fonction du nombre de tokens utilisés, propose un vraie solution pour des besoins d'entreprise, avec notamment le support LDAP, \aad{}, SQL ou encore \afreerad{}.
 \end{itemize}
 
 \paragraph{}
@@ -115,7 +115,7 @@ J'ai pu terminer avec une démonstration du système via mon prototype.
 
 \paragraph{Contact avec l'éditeur}
 Une fois mon prototype validé, j'ai contacté directement l'éditeur \alse{} pour passer la commande de 30 tokens ainsi que des 30 licences \alinotp{} Enterprise correspondantes.
-En effet, la version Enterprise est nécessaire du fait que les utilisateurs sont résolus depuis un annuaire \aad{} et que l'autentification doit se faire via un serveur \aradius.
+En effet, la version Enterprise est nécessaire du fait que les utilisateurs sont résolus depuis un annuaire \aad{} et que l'authentification doit se faire via un serveur \aradius.
 
 J'en ai profité pour leur demander des conseils sur les différentes briques logicielles à utiliser sur l'architecture finale.
 Par la suite, j'ai également pu leur faire de nombreux retours sur les problèmes que j'ai rencontré et sur la façon dont j'ai pu les contourné.
@@ -132,7 +132,7 @@ J'ai alors travaillé avec \amimiette{} qui m'a expliqué comment m'intégrer ef
 Cette première intervention a duré deux jours.
 En outre, j'ai pris notes relatives à mon travail sur leurs serveur au fur et à mesure afin de pouvoir rédiger une documentation technique complète.
 
-Aussi, j'ai dû rapidement intervenir une seconde fois afin de corriger un premier bug découvert : l'autentification d'un utilisateur, bien qu'elle soit correcte, n'était pas considérée comme valide environ 1 fois sur 3.
+Aussi, j'ai dû rapidement intervenir une seconde fois afin de corriger un premier bug découvert : l'authentification d'un utilisateur, bien qu'elle soit correcte, n'était pas considérée comme valide environ 1 fois sur 3.
 J'ai pu rapidement cibler le problème qui provenait de la connectivité avec l'annuaire \aad.
 J'en ai parlé avec \amimiette{} qui s'est rappelé avoir eu un problème similaire par le passé avec un précédent prestataire de \asmile : il s'agissait en fait d'une option de configuration LDAP à désactiver le serveur hébergeant ma solution \alinotp. 
 
@@ -176,11 +176,11 @@ Un \arp{} est alors configuré : l'intérêt est de faire passer l'utilisateur p
 Celle-ci reste donc toujours isolée de l'extérieur.
 
 Une authentification HTTP Basic\footnote{Dans le cadre d'une transaction HTTP, l'authentification Basic est une méthode permettant de fournir un identifiant et un mot de passe lors d'une requête. Ce couple est fourni via les en-têtes de la requête HTTP.~\cite{httpbasic}} est mise en place sur ce \arp{}.
-Quand l'utilisateur a entré son identifiant et son mot de passe issu d'un OTP, le module Apache \amodpam{} prend le relai et réalise une authentification PAM\footnote{Pluggable Authentication Modules (en abrégé PAM) est un mécanisme permettant d'intégrer différents schémas d'authentification de bas niveau dans une API de haut niveau, permettant de ce fait de rendre indépendants du schéma les logiciels réclamant une authentification. PAM est une création de Sun Microsystems et est supporté en 2006 sur les architectures Solaris, \alinux, FreeBSD, NetBSD, AIX et HP-UX.~\cite{pam}}.
+Quand l'utilisateur a entré son identifiant et son mot de passe issu d'un OTP, le module Apache \amodpam{} prend le relais et réalise une authentification PAM\footnote{Pluggable Authentication Modules (en abrégé PAM) est un mécanisme permettant d'intégrer différents schémas d'authentification de bas niveau dans une API de haut niveau, permettant de ce fait de rendre indépendants du schéma les logiciels réclamant une authentification. PAM est une création de Sun Microsystems et est supporté en 2006 sur les architectures Solaris, \alinux, FreeBSD, NetBSD, AIX et HP-UX.~\cite{pam}}.
 Ainsi, on filtre les utilisateurs de façon à ce que seuls ceux qui ont été acceptés par \alinotp{} puissent rentrer.
 
 En effet, un serveur \alinotp{} Community Edition est mis en place, car nous ne disposions pas encore des licences pour la version Enterprise.
-Une entrée PAM du système -- contactée par \amodpam{} -- est configurée pour utiliser le module PAM de LinOTP.
+Une entrée PAM du système -- contactée par \amodpam{} -- est configurée pour utiliser le module PAM de \alinotp.
 En outre, la base d'utilisateurs est simplement représentée par le fichier \texttt{/etc/passwd} du système \alinux. 
 
 Enfin, les utilisateurs utilisent un client \amotp{}\footnote{e.g. DroidOTP sur un téléphone Android} sur leur smartphone pour générer leurs OTP : nous n'avions pas non plus de vrais tokens OTP à notre disposition.
@@ -227,7 +227,7 @@ En effet, dans l'architecture finale, on a préféré une authentification via l
 	\item le module \amodradius{} pour Apache donne un degré de configuration bien plus intéressant, en permettant entre autres de spécifier la durée de la session de l'utilisateur.
 \end{itemize}
 
-En outre, un serveur LinOTP Enterprise Edition est mis en place : cette version permet de supporter la connectivité avec le serveur \aradius{} et de résoudre les utilisateurs depuis l'annuaire \aad{} de la CNIL.
+En outre, un serveur \alinotp{} Enterprise Edition est mis en place : cette version permet de supporter la connectivité avec le serveur \aradius{} et de résoudre les utilisateurs depuis l'annuaire \aad{} de la CNIL.
 D'ailleurs, le serveur \afreerad{} a été compilé avec un module fourni par cette version Enterprise de \alinotp{}, ce qui permet aux deux services de communiquer entre eux.
 
 Enfin, les utilisateurs peuvent cette fois utiliser les tokens Aladdin eToken PASS envoyés par l'éditeur \alse{} pour générer leurs OTP.
