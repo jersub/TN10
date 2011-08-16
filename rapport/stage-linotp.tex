@@ -40,7 +40,7 @@ Au courant de l'année 2010, la Commission nationale de l'informatique et des li
 Au nombre d'une vingtaine, ceux-ci ont besoin d'accéder au contenu du site web à l'extérieur de leur lieu de travail, à la maison par exemple.
 
 \paragraph{}
-La CNIL avait déjà fait appel aux prestations de \asmile{} pour bénéficier d'un support ponctuel sur des développements \atypo{}, le système de gestion de contenu utilisé pour le portail.
+La CNIL avait déjà fait appel aux prestations de \asmile{} pour bénéficier d'un support ponctuel sur des développements \atypo{}\footnote{\atypo{} est un système de gestion de contenu libre écrit en PHP. Fourni de base avec un certain nombre de fonctionnalités, il peut être étendu de manière impressionnante grâce à un puissant moteur de plugins. Une console d'administration permet aux auteurs et aux administrateurs de gérer facilement le contenu du site web.}, le système de gestion de contenu utilisé pour le portail.
 C'est pour cela qu'elle a également choisi \asmile{} pour mettre en place l'architecture permettant un tel accès depuis l'extérieur.
 
 \paragraph{}
@@ -151,10 +151,10 @@ Par ailleurs, la capitalisation s'est concrétisée côté \asmile{} par une pag
 \subsection{Architecture du prototype}
 \label{section:linotp:prototype}
 
-\paragraph{}
-Mon prototype a été mis en place sur une machine virtuelle Virtual~Box.
+\paragraph{Environnement}
+Mon prototype a été mis en place sur une machine virtuelle VirtualBox.
 Ce type de machine virtuelle a l'avantage d'être portable et d'être facilement copié ou déplacé sur plusieurs ordinateurs différents.
-C'était donc le format idéal pour effectuer les deux présentations du prototype.
+C'était donc le format idéal pour effectuer les deux présentations du prototype chez \asmile{} et chez le client.
 
 \begin{figure}
 	\centering
@@ -202,7 +202,71 @@ L'authentification sur le prototype avec un client \amotp{} se déroule de la fa
 \subsection{Architecture mise en place}
 \label{section:linotp:archi-finale}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=12cm]{linotp/archi-finale}
+	\caption{Architecture finale du système d'authentification OTP de la CNIL}
+	\label{figure:linotp:archi-finale}
+\end{figure}
 
-Le portail \aintranet{} \atypo{} conserve sa base d'utilisateurs existante qui est liée 
-TODO
+\paragraph{Architecture}
+L'architecture finale est illustrée en \reffigure{linotp:archi-finale}.
+
+Le portail \aintranet{} \atypo{} reste hébergé sur son serveur Apache d'origine, qui n'est accessible que depuis le réseau interne de la CNIL.
+Il conserve sa base d'utilisateurs existante qui est liée à l'annuaire \aad{}.
+
+Un autre serveur Apache est mis en place.
+Comme dans le prototype il est configuré en tant que \arp{} pour être l'intermédiaire entre le serveur web du portail et le navigateur de l'utilisateur qui se connecte depuis \ainternet{}.
+L'accès est ici aussi filtré par une authentification HTTP Basic.
+
+Par contre, le module d'authentification pour Apache à appeler est dorénavant \amodradius{} : en tant que client \aradius{}, il se charge d'effectuer une requête sur un serveur \afreerad{}\footnote{\afreerad{} est un serveur \aradius{} libre.~\cite{freeradius}} mis en place et configuré spécialement pour ce cas d'utilisation. 
+En effet, dans l'architecture finale, on a préféré une authentification via le protocole \aradius{}\footnote{\aradius{} (\etranger{Remote Authentication Dial-In User Service}) est un protocole client-serveur permettant de centraliser des données d'authentification.~\cite{radius}} plutôt que par PAM pour plusieurs raisons :
+
+\begin{itemize}
+	\item un serveur \aradius{} est indépendant du système sur lequel il est hébergé, contrairement à PAM ;
+	\item le module \amodradius{} pour Apache donne un degré de configuration bien plus intéressant, en permettant entre autres de spécifier la durée de la session de l'utilisateur.
+\end{itemize}
+
+En outre, un serveur LinOTP Enterprise Edition est mis en place : cette version permet de supporter la connectivité avec le serveur \aradius{} et de résoudre les utilisateurs depuis l'annuaire \aad{} de la CNIL.
+D'ailleurs, le serveur \afreerad{} a été compilé avec un module fourni par cette version Enterprise de \alinotp{}, ce qui permet aux deux services de communiquer entre eux.
+
+Enfin, les utilisateurs peuvent cette fois utiliser les tokens Aladdin eToken PASS envoyés par l'éditeur \alse{} pour générer leurs OTP.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=11cm]{linotp/archi-infra}
+	\caption{Intégration de la solution \alinotp{} dans l'infrastructure de la CNIL}
+	\label{figure:linotp:archi-infra}
+\end{figure}
+
+\paragraph{Intégration avec l'infrastructure du client}
+Lors de la mise en place de la solution, il a fallu d'adapter et s'intégrer à l'infrastructure existante du client.
+La principale contrainte technique était de monter l'architecture sur des serveurs virtualisés \alinux{} \aredhat{}.
+Dans ce contexte, on a l'avantage de pouvoir utiliser autant de machines virtuelles que l'on veut car celles-ci peuvent être créées rapidement et sans coût supplémentaire significatif.
+
+J'ai alors demandé à \amimiette{} de mettre en place deux serveurs virtualisés \aredhat{} :
+\begin{itemize}
+	\item le premier, \asrvotp{}, localisé dans le réseau interne et hébergeant les services \alinotp{} et \afreerad{} ;
+	\item le second, \asrvrp, localisé dans une DMZ\footnote{Une zone démilitarisée (ou DMZ, de l'anglais \etranger{demilitarized zone}) est un sous-réseau isolé du réseau local par un pare-feu. Ce sous-réseau contient les machines étant susceptibles d'être accédées depuis \ainternet.~\cite{dmz}} et donc accessible depuis l'extérieur, qui héberge le \arp{}.
+\end{itemize}
+
+Ce partitionnement des services sur deux serveurs différents permet de sécuriser l'architecture.
+En effet, seul le \arp{} doit être accessible de l'extérieur.
+Si par exemple un pirate arrive à compromettre ce serveur web, le serveur \alinotp{} ainsi que toutes les données qui y sont relatives comme la liste des utilisateurs, les tokens qui leurs sont affectés et leurs PIN correspondants ne seront pas mis en danger, à condition que la frontière entre la DMZ et le réseau interne soit suffisamment sécurisée et étanche.
+
+Cette intégration est décrite sur la \reffigure{linotp:archi-infra}.
+
+\paragraph{Scénario d'utilisation}
+
+L'authentification avec un token se déroule de la façon suivante :
+
+\begin{enumerate}
+	\item l'utilisateur contacte le \arp{} depuis \ainternet{} grâce à son navigateur web ;
+	\item une authentification HTTP de type Basic est demandée à l'utilisateur sur son navigateur ;
+	\item l'utilisateur appuie sur le bouton du token ce qui déclenche la génération de l'OTP et son affichage sur l'écran du token ;
+	\item l'OTP obtenu précédé par le PIN OTP personnel de l'utilisateur forme son mot de passe ;
+	\item l'utilisateur s'authentifie dans son navigateur grâce à son identifiant et son mot de passe ;
+	\item le \arp{} valide l'authentification, émet une requête HTTP vers le serveur web hébergeant le portail \atypo{} et récupère la page web demandée ;
+	\item le \arp{} retourne la page web a l'utilisateur qui la visualise dans son navigateur web.
+\end{enumerate}
 
