@@ -1,0 +1,53 @@
+\ProvidesPackage{stageutc}
+
+\RequirePackage{graphicx}
+\RequirePackage{changepage}
+\RequirePackage{fancyhdr}
+
+% adds \subtitle{} command
+\def\subtitle#1{\def\@subtitle{#1}}
+
+\makeatletter
+
+% handles custom title
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+		\changepage{2cm}{3.5cm}{}{-1.7cm}{}{-1.5cm}{}{}{}
+
+		\includegraphics[width=5cm]{logo-utc}
+
+		\begin{bf}
+		%\begin{large}
+
+			\begin{tabbing}
+				Étudiant : \@author		\= \hspace{7.5cm}	\= UTC \\
+				Suiveur UTC : \asuiveur	\>			\> Génie Informatique \\
+							\>			\> \@date \\
+			\end{tabbing}
+
+			\vspace{5cm}
+
+			\begin{center}
+			\begin{LARGE}
+				Ingénieur système et développement\\
+				en environnement open source\\
+			\end{LARGE}
+			\end{center}
+
+			\vspace{8cm}
+
+			\begin{tabbing}
+				\hspace{11.5cm}	\= Entreprise : \asmile \\
+						\> Lieu : Levallois-Perret (92) \\
+						\> Responsable : \apakou \\
+			\end{tabbing}
+
+		%\end{large}
+		\end{bf}
+
+	\end{titlepage}
+}
+
+% margins
+\changepage{}{}{}{}{}{}{14pt}{}{} % for fancyhdr
+

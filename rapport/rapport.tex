@@ -3,44 +3,47 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{setspace}
-\usepackage{color}
-\usepackage{fancyhdr}
-\usepackage{array}
-\usepackage{changepage}
+\usepackage{stageutc}
 
 \input{commands}
 \input{alias}
 
 
 \title{TN10 -- Rapport de stage}
-\author{\ajeremy}
+\subtitle{Ingénieur système et développement en environnement open source}
+\author{\ame}
+\date{Semestre~P11}
 
-\lhead{\begin{small}\nouppercase{\leftmark}\end{small}}
-\rhead{\begin{small}\nouppercase{\rightmark}\end{small}}
+\makeatletter
+\hypersetup{
+	pdftitle={\@title},
+	pdfauthor={\@author},
+	pdfsubject={\@subtitle}
+}
+\makeatother
 
 \graphicspath{{figs/}}
 
 
 \begin{document}
 
-\input{titre}
-\newpage
+\maketitle
 
 \input{remerciements}
 \newpage
 
 \tableofcontents
 \listoffigures
-\listoftables
 \newpage
 
 \input{resume}
 \newpage
 
+% fancyhdr
 \pagestyle{fancy}
+\lhead{\begin{small}\nouppercase{\leftmark}\end{small}}
+\rhead{\begin{small}\nouppercase{\rightmark}\end{small}}
 
 \input{presentation}
 \input{stage}
