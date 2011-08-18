@@ -57,14 +57,54 @@ Il ajoute entre autres une gestion fine des utilisateurs, des plugins \anagios{}
 
 \subsection{Contexte de la mission}
 
+\paragraph{}
+Le client de \asmile{} pour cette mission était \adacast.
+C'est une relativement jeune startup présente en France et aux États-Unis.
+Son concept est de fournir une plateforme de diffusion multimédia à la demande, en live ou non, performante et simple à utiliser.
+Ainsi, ses clients fournissent leurs flux audio ou vidéo et c'est \adacast{} qui se charge de les transformer dans le bon format et les diffuser tout en supportant les éventuels pics d'audience.
+\adacast{} propose également différentes façon de monétiser les diffusions, que ce soit par la publicité, par un paiement à la vue ou au forfait.
+
+\paragraph{}
+Dans ce contexte, \adacast{} souhaite s'équiper d'une solution de supervision pour surveiller en temps réel son parc de serveurs.
+En effet, jusqu'ici, les vérifications de disponibilité de ses services étaient relativement primaires alors que son offre, son nombre de clients et ses enjeux deviennent de plus en plus importants.
+Toute rupture de service devient vite critique et doit être prise en charge dans les plus brefs délais.
+Il s'agit aussi pour \adacast{} de faire preuve de professionnalisme envers ses clients en dépannant les problèmes avant de recevoir tout coup de fil de plainte.
+
+\paragraph{}
+Chez \asmile{}, \asegir{} est le spécialiste de la solution de supervision \acentreon{}.
+Je l'ai donc suivi lors de son intervention chez \adacast{} pour apprendre à maîtriser cette technologie.
+Nous avons travaillé ensemble la première journée durant laquelle il m'a formé, et j'ai pu terminer la mission seul le lendemain.
+\asegir{} est ensuite intervenu à nouveau pour fournir une documentation et former les utilisateurs.
+
 
 \subsection{Notre démarche}
 
-location serveur
-install centreon
+\paragraph{}
+Pour réduire les coûts et limiter le temps d'intervention, \adacast{} n'a commandé que l'installation de la solution \acentreon{} et la supervision de deux serveurs.
+La supervision des autres serveurs serait alors effectuée par ses ressources internes.
 
-configuration des pluugins
+\paragraph{}
+Pour installer la plateforme \acentreon{}, nous avons demandé à notre interlocuteur de nous fournir un serveur indépendant.
+En effet, il est important que la solution de supervision soit sur un serveur qui soit indépendant des serveurs à surveiller.
+L'intérêt est à la fois de séparer les services et de ne pas être soumis aux même pannes que ce qui doit être supervisé.
 
+Le client a choisi de commander un serveur à bas coût -- de l'ordre de 20\euro~HT par mois -- chez un hébergeur externe.
+Une telle configuration minimaliste est suffisante pour le besoin car peu d'utilisateurs vont consulter la plateforme \acentreon{} et le trafic relatif à l'échange de données de surveillance est limité.
 
+\asegir{} m'a alors montré comment installer \acentreon{} sur un système \alinux{} Ubuntu Server.
 
+\paragraph{}
+Nous sommes ensuite passés à la partie la plus intéressante de l'intervention, c'est-à-dire la configuration de la solution en fonction des besoins du client.
+Pour cela, des démons NRPE ont été installés sur chaque serveur à superviser.
+Nous avons alors mis en place un certain nombre de plugins pour couvrir le périmètre attendu, qui inclut entre autres :
+
+\begin{itemize}
+	\item la surveillance des ressources des machines (consommation processeur et mémoire, charge serveur, espace disque disponible) ;
+	\item le fonctionnement du RAID matériel ;
+	\item la surveillance de la disponibilité de ses services (HTTP, MySQL, FTP, SSH, etc.) ;
+	\item la surveillance des métriques relatives à l'utilisation de leur base de données MySQL.
+\end{itemize}
+
+\paragraph{}
+Enfin, une vue d'ensemble de l'architecture mise en place est illustrée en ?.
 
