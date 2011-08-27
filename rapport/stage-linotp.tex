@@ -1,7 +1,7 @@
-\section{Mise en place d'une solution \alinotp{}}
+\chapter{Mise en place d'une solution \alinotp{}}
 \label{section:linotp}
 
-\subsection{Principe des \etranger{One-Time Passwords} (OTP)}
+\section{Principe des \etranger{One-Time Passwords} (OTP)}
 
 \paragraph{}
 Les \etranger{One-Time Passwords}, aussi appelés OTP, sont des mots de passe générés à un instant donné, valides pendant une courte durée et utilisables une seule fois.
@@ -34,7 +34,7 @@ De plus, pour chaque token est définie une clé secrète que l'on enregistre da
 C'est la combinaison de ces deux paramètres qui permet une génération et une validation des OTP.
 
 
-\subsection{Contexte de la mission}
+\section{Contexte de la mission}
 
 \paragraph{}
 Au courant de l'année 2010, la Commission nationale de l'informatique et des libertés\footnote{La CNIL est une autorité administrative indépendante française.Elle est chargée de veiller à ce que l'informatique soit au service du citoyen et qu'elle ne porte atteinte ni à l'identité humaine, ni aux droits de l'homme, ni à la vie privée, ni aux libertés individuelles ou publiques.~\cite{cnil}} (CNIL) décide d'ouvrir son portail \aintranet{} pour certains de ses utilisateurs : les commissaires.
@@ -52,7 +52,7 @@ Pour des raisons qui sont restées inconnues -- le nombre de licences commandée
 Le retard sur la mise en place de l'architecture a alors poussé \asmile{} à changer de solution pour se tourner vers une alternative open source : \alinotp{}.
 
 
-\subsection{La solution \alinotp{}}
+\section{La solution \alinotp{}}
 
 \paragraph{}
 La solution \alinotp{} se place au centre du mécanisme d'authentification :
@@ -94,7 +94,7 @@ La \reffigure{linotp:linotp-archi} illustre l'architecture modulaire de \alinotp
 \end{figure}
 
 
-\subsection{Ma démarche}
+\section{Ma démarche}
 
 \paragraph{Mise en place d'un prototype}
 C'est mon manager \apakou{} qui m'a confié la responsabilité de mettre en place la solution \alinotp{} chez notre client.
@@ -149,7 +149,7 @@ Elle a alors fait l'objet d'un article dédié dont je suis l'auteur sur le blog
 Par ailleurs, la capitalisation s'est concrétisée côté \asmile{} par une page de documentation sur le wiki technique et côté CNIL par une documentation technique et une documentation utilisateur.
 
 
-\subsection{Architecture du prototype}
+\section{Architecture du prototype}
 \label{section:linotp:prototype}
 
 \paragraph{Environnement}
@@ -200,7 +200,7 @@ L'authentification sur le prototype avec un client \amotp{} se déroule de la fa
 \end{enumerate}
 
 
-\subsection{Architecture mise en place}
+\section{Architecture mise en place}
 \label{section:linotp:archi-finale}
 
 \begin{figure}
