@@ -1,8 +1,7 @@
 \ProvidesPackage{stageutc}
 
 \RequirePackage{graphicx}
-\RequirePackage{changepage}
-\RequirePackage{fancyhdr}
+\RequirePackage{geometry}
 
 % adds \subtitle{} and \keywords{} commands
 \def\subtitle#1{\def\@subtitle{#1}}
@@ -13,7 +12,7 @@
 % handles custom title
 \renewcommand{\maketitle}{
 	\begin{titlepage}
-		\changepage{2cm}{3.5cm}{}{-1.7cm}{}{-1.5cm}{}{}{}
+		\newgeometry{left=2cm,right=2cm,top=3.5cm}
 
 		\includegraphics[width=5cm]{logo-utc}
 
@@ -38,7 +37,7 @@
 			\vspace{8cm}
 
 			\begin{tabbing}
-				\hspace{11.5cm}	\= Entreprise : \asmile \\
+				\hspace{10.5cm}	\= Entreprise : \asmile \\
 						\> Lieu : Levallois-Perret (92) \\
 						\> Responsable : \apakou \\
 			\end{tabbing}
@@ -48,7 +47,4 @@
 
 	\end{titlepage}
 }
-
-% margins
-\changepage{}{}{}{}{}{}{14pt}{}{} % for fancyhdr
 
