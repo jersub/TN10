@@ -1,12 +1,82 @@
 \section{Intégration continue}
 
+\paragraph{}
+Le concept d'intégration continue consiste à tester automatiquement l'application tout au long de son développement.
+Cela permet de prévenir les régressions et de détecter facilement où et quand des erreurs ont été introduites.
+
+À l'échelle du développeur ou du chef de projet, lancer les tests d'un projet moyen doté une bonne couverture de tests prend beaucoup de temps.
+C'est pour cela que les jeux de tests sont lancés de manière complètement automatique par un outil nommé \emph{plateforme d'intégration continue} (PIC).
+Il est utilisé conjointement avec un système de gestion de version pour manipuler le code source.
+
+\paragraph{}
+En effet, pour chaque projet en cours de développement, la plateforme d'intégration continue surveille constamment si de nouveaux changements ont été introduits sur leur dépôt de code source respectif.
+À intervalle de temps régulier, elle reconstruit chaque projet ayant fait l'objet de modifications depuis la passe précédente.
+Les tests qui ont été écrits par les développeurs sont alors lancés.
+À l'issue de la passe de tests, un rapport est sauvegardé.
+Grâce au système de gestion de version, il est possible de savoir à quelle révision des bugs ou des régressions sont apparues.
+ Enfin, l'état du projet -- en succès ou en échec -- est indiqué clairement aux visiteurs de la PIC.
+
+Cet état peut être communiqué aux personnes intéressées de manière plus directe.
+Il est par exemple possible de mettre en place des notifications par e-mail, messagerie instantanée, SMS voire même via les réseaux sociaux.
+
+\paragraph{}
+Avec l'intégration continue, on pousse au maximum les bénéfices des tests pour assurer la qualité logicielle du projet.
+De plus, les PIC sont un outil idéal pour la mise en place de méthodes agiles.
+En effet, lancer des tests de manière continue favorise la flexibilité en permettant de se lancer de façon réactive dans des changements plus ou moins importants.
+La couverture de tests donne la possibilité de détecter les éventuelles régressions qui seront localisées dans le code et dans le temps grâce aux données des différents rapports issus de la PIC.
+
+
+
 \subsection{Outils}
 
-\subsubsection{Hudson/Jenkins}
+\subsubsection{Jenkins}
+
+\paragraph{}
+Jenkins est la PIC open source la plus populaire actuellement.
+Écrite en Java, elle fonctionne dans un conteneur de servlets et est administrable via une interface web.
+
+\paragraph{}
+Chaque projet est listé sur la page principale de la PIC.
+Un code couleur lui est associé : bleu en cas de succès de l'exécution du jeu de test, rouge en cas d'échec, jaune pour \og instable \fg{} et gris pour \og inconnu \fg.
+La tendance récente de l'état du projet est même reportée via la métaphore de la météo : un icône représentant un soleil, des nuages ou un orage.
+
+\paragraph{}
+De base, la configuration du lancement des tests du projet s'effectue via de simples scripts shell UNIX ou batch Windows.
+Pour les projets Java, il est également possible de reposer sur des scripts Ant\footnote{Ant est un projet open source de la fondation Apache écrit en Java qui vise le développement d'un logiciel d'automatisation des opérations répétitives tout au long du cycle de développement logiciel, à l'instar des logiciels Make. Ant est principalement utilisé pour automatiser la construction de projets en langage Java, mais il peut être utilisé pour tout autre type d'automatisation dans n'importe quel langage.~\cite{ant}} ou Maven\footnote{Maven est un outil open source pour la gestion et l'automatisation de production des projets logiciels Java en général et Java~EE en particulier. L'objectif recherché est comparable au système Make sous UNIX : produire un logiciel à partir de ses sources, en optimisant les tâches réalisées à cette fin et en garantissant le bon ordre de fabrication. Il est semblable à l'outil Ant, mais fournit des moyens de configuration plus simples, eux aussi basés sur le format XML. Maven est géré par l'organisation Apache Software Foundation.~\cite{maven}}.
+
+L'exécution des tests peut être initié par différents moyens, comme des mécanismes de planification similaires au cron\footnote{cron est le nom d'un programme qui permet aux utilisateurs des systèmes UNIX d'exécuter automatiquement des scripts, des commandes ou des logiciels à une date et une heure spécifiées à l'avance, ou selon un cycle défini à l'avance.~\cite{cron}} ou une surveillance d'un dépôt de code source, entre autres.
+
+En outre, il est possible de distribuer les le lancement des tests de chaque projet sur des machines différentes.
+Les projets sont configurés sur un serveur Jenkins maître qui peut redistribuer ses tâches sur des serveurs esclaves mis en place sur d'autres machines.
+
+\paragraph{}
+Enfin, la force de Jenkins est son architecture modulaire.
+Chaque fonctionnalité prend la forme d'un plugin qui peut être activé ou non de façon à ne pas alourdir ni l'interface de configuration ni le système.
+Ainsi, aucune technologie n'est privilégiée avec Jenkins.
+Seuls les plugins les plus importants sont fournis de base, alors qu'une communauté très active de développeurs propose régulièrement des plugins à la pointe des tendances actuelles.
+
+On trouve notamment l'intégration avec Redmine, Subversion ou Selenium. 
+
+\paragraph{}
+À noter que Jenkins peut également être utilisé pour autre chose que l'exécution de tests.
+Une autre utilisation concerne la construction ou la compilation\footnote{La compilation est l'action de traduire un langage (appelé le langage source) en un autre (le langage cible), généralement dans le but de créer un exécutable.~\cite{compilation}} régulière de projets de développement.
+
+\paragraph{}
+Des captures d'écran de Jenkins sont accessibles en \refannexe{jenkins}.
+
+
 
 \subsection{Missions}
 
-\subsubsection{paramétrage de la PIC de Spir}
+\subsubsection{Paramétrage de la PIC de Spir}
+
+Pendant mon stage, j'ai eu l'occasion de mettre en place un projet pilote sur la PIC Jenkins de Spir.
+Il concernait l'exécution de tests Selenium, étant donné que le client voulait s'équiper de cet outil.
+
+
 
 \subsubsection{Formation Jenkins chez Spir}
+
+La formation Selenium chez Spir évoquée précédemment a été suivie par une formation Jenkins décrivant l'intégration de tests Selenium dans la PIC.
+C'est une formation que j'ai préparée en amont moi-même et que nous avons présenté au client en duo avec \agulet.
 
