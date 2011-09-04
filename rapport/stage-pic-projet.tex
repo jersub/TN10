@@ -11,11 +11,11 @@ La clé de l'outil de gestion de projet est le système de gestion des tâches, 
 Chaque tâche est représentée par une entrée dans le système, appelée \textit{ticket}, \textit{demande} ou \textit{rapport de bug} selon les outils.
 Elle dispose d'un titre et d'une description qui permettent de savoir en quoi elle consiste.
 Elle possède également un statut dont le but est de préciser son état d'avancement : de façon minimaliste, le statut peut prendre les valeurs \og non réalisé \fg, \og en cours \fg{} et \og terminé \fg{} par exemple.
-De plus, une tâche peut être attribuée à un utilisateur du système qui sera considéré comme la personne en charge de sa réalisation.
+De plus, une tâche peut être attribuée à un utilisateur du système : celui-ci sera considéré comme la personne en charge de sa réalisation.
 Une date d'échéance peut aussi être définie.
 En outre, il existe souvent une fonctionnalité de commentaires qui permet aux utilisateurs de partager leur avis ou leur avancement.
 
-Ainsi, le système de gestion des tâches est véritablement l'élément permet de suivre l'avancement du projet.
+Ainsi, le système de gestion des tâches est véritablement l'élément qui permet de suivre l'avancement du projet.
 La granularité est plus ou moins fine en fonction du découpage en tâches qui est pratiqué.
 
 \paragraph{}
@@ -87,7 +87,7 @@ Par contre, c'est un logiciel propriétaire développé en Java par Atlassian So
 Un capture d'écran est présentée en \reffigure{pic:jira}.
 
 Proposer un logiciel propriétaire n'est pas commun chez \asmile.
-En fait il d'avère qu'il est complet et qu'il a beaucoup plu à Rexel, un des clients de \asmile{} qui a commandé l'intégration des autres outils open source de l'offre.
+En fait, il s'avère qu'il est complet et qu'il a beaucoup plu à Rexel, un des clients de \asmile{} qui a commandé l'intégration des autres outils open source de l'offre.
 
 Son atout le plus notable est l'ensemble des représentations graphiques qu'il propose, mettant en relief les données des différents projets suivis.
 
@@ -128,12 +128,12 @@ Celui-ci améliore les graphes GANTT des tâches en ajoutant des flèches pour r
 
 Or, dans Redmine, il est possible de lier une tâche d'un projet à celle d'un autre projet.
 Le problème est que les tâches issues d'un projet différent ne sont pas dessinées sur le GANTT. 
-Je me suis alors chargé d'ajouter cette fonctionnalité que l'équipe à l'origine du plugin s'est empressée d'intégrer dans leur base de code.
+Je me suis alors chargé d'ajouter cette fonctionnalité, que l'équipe à l'origine du plugin s'est d'ailleurs empressée d'intégrer dans sa base de code.
 
 \paragraph{}
 Enfin, le dernier développement a concerné la possibilité de mettre en place des sous-groupes d'utilisateurs.
 En effet, les groupes regroupent des utilisateurs de façon à les associer en masse à un projet donné.
-Mettre en place des sous-groupes consiste à inclure des groupes dans un autre : de cette façon il est possible de construire une organisation complexe en évitant de répéter des affectations. 
+Mettre en place des sous-groupes consiste à inclure des groupes dans un autre : de cette façon, il est possible de construire une organisation complexe en évitant de répéter des affectations. 
 
 Cette fois, j'ai développé directement dans le c\oe ur de Redmine et j'ai soumis la fonctionnalité à l'équipe qui dirige le développement.
 Malheureusement, rien n'a pu être intégré pour l'instant faute de réponse.

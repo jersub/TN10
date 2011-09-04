@@ -37,8 +37,8 @@ C'est la combinaison de ces deux paramètres qui permet une génération et une 
 \section{Contexte de la mission}
 
 \paragraph{}
-Au courant de l'année 2010, la Commission nationale de l'informatique et des libertés\footnote{La CNIL est une autorité administrative indépendante française.Elle est chargée de veiller à ce que l'informatique soit au service du citoyen et qu'elle ne porte atteinte ni à l'identité humaine, ni aux droits de l'homme, ni à la vie privée, ni aux libertés individuelles ou publiques.~\cite{cnil}} (CNIL) décide d'ouvrir son portail \aintranet{} pour certains de ses utilisateurs : les commissaires.
-Au nombre d'une vingtaine, ceux-ci ont besoin d'accéder au contenu du site web à l'extérieur de leur lieu de travail, à la maison par exemple.
+Au courant de l'année 2010, la Commission nationale de l'informatique et des libertés\footnote{La CNIL est une autorité administrative indépendante française. Elle est chargée de veiller à ce que l'informatique soit au service du citoyen et qu'elle ne porte atteinte ni à l'identité humaine, ni aux droits de l'homme, ni à la vie privée, ni aux libertés individuelles ou publiques.~\cite{cnil}} (CNIL) décide d'ouvrir son portail \aintranet{} confidentiel sur l'\ainternet{} pour certains de ses utilisateurs : les commissaires.
+Au nombre d'une vingtaine, ceux-ci ont besoin d'accéder au contenu du site web à l'extérieur de leur lieu de travail -- à la maison par exemple.
 
 \paragraph{}
 La CNIL avait déjà fait appel aux prestations de \asmile{} pour bénéficier d'un support ponctuel sur des développements \atypo{}\footnote{\atypo{} est un système de gestion de contenu libre écrit en PHP. Fourni de base avec un certain nombre de fonctionnalités, il peut être étendu de manière impressionnante grâce à un puissant moteur de plugins. Une console d'administration permet aux auteurs et aux administrateurs de gérer facilement le contenu du site web.}, le système de gestion de contenu utilisé pour le portail.
@@ -58,7 +58,7 @@ Le retard sur la mise en place de l'architecture a alors poussé \asmile{} à ch
 La solution \alinotp{} se place au centre du mécanisme d'authentification :
 
 \begin{itemize}
-	\item l'interface de connexion utilisateur demande à \alinotp{} de valider ou non l'authentification ;
+	\item l'interface de connexion utilisateur du portail demande à \alinotp{} de valider ou non l'authentification ;
 	\item \alinotp{} consulte une base de données des utilisateurs déjà existante (e.g. un LDAP) ;
 	\item les informations concernant les matériels OTP sont stockées dans sa propre base de données.
 \end{itemize}
@@ -72,7 +72,7 @@ On peut imaginer développer une interface web spécifique que l'on inclurait da
 Par ailleurs, \alinotp{} se décline en deux éditions :
 
 \begin{itemize}
-	\item l'édition Community, libre et gratuite, qui propose des fonctions de bases pour mettre en place une maquette ;
+	\item l'édition Community, libre et gratuite, qui propose des fonctions de base pour mettre en place une maquette ;
 	\item l'édition Enterprise, pour laquelle il faut acheter des licences en fonction du nombre de tokens utilisés, propose un vraie solution pour des besoins d'entreprise, avec notamment le support LDAP, \aad{}, SQL ou encore \afreerad{}.
 \end{itemize}
 
@@ -80,7 +80,7 @@ Par ailleurs, \alinotp{} se décline en deux éditions :
 La \reffigure{linotp:linotp-archi} illustre l'architecture modulaire de \alinotp{}~2 tout en mettant en évidence les possibilités de la solution :
 
 \begin{itemize}
-	\item en rouge est représenté le c\oe ur de \alinotp{} : le serveur ainsi que sa base de tokens stockée dans une base de données externe ;
+	\item en rouge est représenté le c\oe ur de \alinotp{} -- le serveur ainsi que sa base de tokens stockée dans une base de données externe ;
 	\item en vert, on retrouve les différentes interfaces de résolution des utilisateurs ;
 	\item en jaune, les interfaces d'authentification seront contactées par les pro\-gram\-mes clients de la solution qui demanderont si un couple identifiant~/~mot de passe OTP est bien valide ;
 	\item enfin, en bleu on retrouve les différentes interfaces qui permettent d'administrer \alinotp{}, que ce soit par le web ou en ligne de commande.
@@ -119,23 +119,23 @@ Une fois mon prototype validé, j'ai contacté directement l'éditeur \alse{} po
 En effet, la version Enterprise est nécessaire du fait que les utilisateurs sont résolus depuis un annuaire \aad{} et que l'authentification doit se faire via un serveur \aradius.
 
 J'en ai profité pour leur demander des conseils sur les différentes briques logicielles à utiliser sur l'architecture finale.
-Par la suite, j'ai également pu leur faire de nombreux retours sur les problèmes que j'ai rencontré et sur la façon dont j'ai pu les contourné.
+Par la suite, j'ai également pu leur faire de nombreux retours sur les problèmes que j'ai rencontré et sur la façon dont j'ai pu les contourner.
 Cette échange donnant-donnant a été très bénéfique et présage un futur partenariat privilégié entre \asmile{} et \alse{}.
 
 \paragraph{Mise en place de l'architecture finale}
 Les détails techniques de l'architecture finale seront décrits dans la \refsection{linotp:archi-finale}.
 
-J'ai commencé par mettre en place le système sur des machines virtuelles hébergées sur des serveurs de \asmile{}.
+J'ai commencé par mettre en place le système sur des environnements virtuels hébergés sur des serveurs de \asmile{}.
 Cela m'a permis d'être rapidement confronté aux premiers problèmes et de les résoudre avant d'intervenir chez le client.
 
 Une fois ma maquette jugée satisfaisante et répondant au besoin, j'ai pris rendez-vous avec le client pour mon intervention.
 J'ai alors travaillé avec \amimiette{} qui m'a expliqué comment m'intégrer efficacement à leur infrastructure système existante.
 Cette première intervention a duré deux jours.
-En outre, j'ai pris notes relatives à mon travail sur leurs serveur au fur et à mesure afin de pouvoir rédiger une documentation technique complète.
+En outre, j'ai pris des notes relatives à mon travail sur leurs serveurs au fur et à mesure afin de pouvoir par la suite rédiger une documentation technique complète.
 
 Aussi, j'ai dû rapidement intervenir une seconde fois afin de corriger un premier bug découvert : l'authentification d'un utilisateur, bien qu'elle soit correcte, n'était pas considérée comme valide environ 1 fois sur 3.
 J'ai pu rapidement cibler le problème qui provenait de la connectivité avec l'annuaire \aad.
-J'en ai parlé avec \amimiette{} qui s'est rappelé avoir eu un problème similaire par le passé avec un précédent prestataire de \asmile : il s'agissait en fait d'une option de configuration LDAP à désactiver le serveur hébergeant ma solution \alinotp. 
+J'en ai parlé avec \amimiette{} qui s'est rappelé avoir eu un problème similaire par le passé avec un précédent prestataire de \asmile : il s'agissait en fait d'une option de configuration LDAP à désactiver sur le serveur hébergeant ma solution \alinotp. 
 
 Mon infrastructure OTP enfin fonctionnelle, \arolel{}, un développeur de la \abugan{}, a pu intervenir à son tour une journée pour adapter le portail \atypo{} au nouveau mode d'authentification.
 Tout s'est bien passé mais il lui manquait des informations pour implémenter la fonctionnalité de déconnexion de l'utilisateur.
@@ -217,7 +217,7 @@ Le portail \aintranet{} \atypo{} reste hébergé sur son serveur Apache d'origin
 Il conserve sa base d'utilisateurs existante qui est liée à l'annuaire \aad{}.
 
 Un autre serveur Apache est mis en place.
-Comme dans le prototype il est configuré en tant que \arp{} pour être l'intermédiaire entre le serveur web du portail et le navigateur de l'utilisateur qui se connecte depuis \ainternet{}.
+Comme dans le prototype, il est configuré en tant que \arp{} pour être l'intermédiaire entre le serveur web du portail et le navigateur de l'utilisateur qui se connecte depuis \ainternet{}.
 L'accès est ici aussi filtré par une authentification HTTP Basic.
 
 Par contre, le module d'authentification pour Apache à appeler est dorénavant \amodradius{} : en tant que client \aradius{}, il se charge d'effectuer une requête sur un serveur \afreerad{}\footnote{\afreerad{} est un serveur \aradius{} libre.~\cite{freeradius}} mis en place et configuré spécialement pour ce cas d'utilisation. 
@@ -233,6 +233,8 @@ D'ailleurs, le serveur \afreerad{} a été compilé avec un module fourni par ce
 
 Enfin, les utilisateurs peuvent cette fois utiliser les tokens Aladdin eToken PASS envoyés par l'éditeur \alse{} pour générer leurs OTP.
 
+\paragraph{Intégration avec l'infrastructure du client}
+
 \begin{figure}
 	\centering
 	\includegraphics[width=11cm]{linotp/archi-infra}
@@ -240,8 +242,7 @@ Enfin, les utilisateurs peuvent cette fois utiliser les tokens Aladdin eToken PA
 	\label{figure:linotp:archi-infra}
 \end{figure}
 
-\paragraph{Intégration avec l'infrastructure du client}
-Lors de la mise en place de la solution, il a fallu d'adapter et s'intégrer à l'infrastructure existante du client.
+Lors de la mise en place de la solution, il a fallu s'adapter et s'intégrer à l'infrastructure existante du client.
 La principale contrainte technique était de monter l'architecture sur des serveurs virtualisés \alinux{} \aredhat{}.
 Dans ce contexte, on a l'avantage de pouvoir utiliser autant de machines virtuelles que l'on veut car celles-ci peuvent être créées rapidement et sans coût supplémentaire significatif.
 
@@ -253,7 +254,7 @@ J'ai alors demandé à \amimiette{} de mettre en place deux serveurs virtualisé
 
 Ce partitionnement des services sur deux serveurs différents permet de sécuriser l'architecture.
 En effet, seul le \arp{} doit être accessible de l'extérieur.
-Si par exemple un pirate arrive à compromettre ce serveur web, le serveur \alinotp{} ainsi que toutes les données qui y sont relatives comme la liste des utilisateurs, les tokens qui leurs sont affectés et leurs PIN correspondants ne seront pas mis en danger, à condition que la frontière entre la DMZ et le réseau interne soit suffisamment sécurisée et étanche.
+Si par exemple un pirate arrive à compromettre ce serveur web, le serveur \alinotp{} ainsi que toutes les données qui y sont relatives comme la liste des utilisateurs, les tokens qui leur sont affectés et leurs PIN correspondants ne seront pas mis en danger, à condition que la frontière entre la DMZ et le réseau interne soit suffisamment sécurisée et étanche.
 
 Cette intégration est décrite sur la \reffigure{linotp:archi-infra}.
 
@@ -270,4 +271,13 @@ L'authentification avec un token se déroule de la façon suivante :
 	\item le \arp{} valide l'authentification, émet une requête HTTP vers le serveur web hébergeant le portail \atypo{} et récupère la page web demandée ;
 	\item le \arp{} retourne la page web a l'utilisateur qui la visualise dans son navigateur web.
 \end{enumerate}
+
+
+\section{Bilan}
+
+Cette prestation a été un succès.
+En effet, le client est content du système mis en place.
+
+Pour ma part, j'ai beaucoup appris de cette mission, tant du plan technique que relationnel.
+J'ai également eu l'opportunité de me charger d'une partie de la gestion de projet en contactant divers interlocuteurs et en planifiant des rendez-vous.
 

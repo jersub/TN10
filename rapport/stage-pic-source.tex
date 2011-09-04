@@ -3,7 +3,7 @@
 
 \paragraph{}
 La gestion de versions du code source est l'outil de prédilection d'une équipe de développement agile.
-En effet, elle permet de suivre l'ensemble des modification effectuées sur le code de façon incrémentale.
+En effet, elle permet de suivre l'ensemble des modifications effectuées sur le code de façon incrémentale.
 Par ailleurs, il faut noter qu'elle ne se borne pas au versionnement de code source.
 Il est ainsi possible de stocker dans un dépôt tout ficher texte, mais aussi tout fichier binaire (e.g. images, documents Office, etc.).
 
@@ -28,7 +28,7 @@ Un outil de gestion de versions facilite également la résolution de bugs, en p
 Étant donné que la granularité des changements entre deux révisions consécutives est relativement fine, on peut détecter l'instant précis où un bug a été introduit et éventuellement annuler les changements de la révision impliquée.
 
 Enfin, la gestion de versions permet de réduire les appréhensions liées au développement de nouvelles fonctionnalités expérimentales.
-Partir dans un nouveau développement indépendant alors que des changements doivent toujours être effectués sur une version dite stable -- celle en production par exemple -- ne pose plus problème.
+Partir dans un nouveau développement indépendant alors que des changements doivent toujours être effectués sur une version dite \emph{stable} -- celle en production par exemple -- ne pose plus problème.
 Les outils donnent la possibilité de fusionner des bases de code qui ont évolué de façon distincte -- appelée \emph{branches} -- par le même système de gestion des conflits qui a été cité précédemment.
 
 \paragraph{}
@@ -37,7 +37,7 @@ La seule contrepartie réside dans le fait que les développeurs doivent être f
 En effet, en tant que premiers utilisateurs du système, ils doivent en voir les bénéfices pour appliquer les bonnes pratiques inhérentes.
 
 \paragraph{}
-L'ensemble du jargon spécifique à la gestion de version qui a été évoqué dans cette section est illustré en \reffigure{pic-source:jargon-depot} et en \reffigure{pic-source:jargon-branches}.
+L'ensemble du jargon spécifique à la gestion de versions qui a été évoqué dans cette section est illustré en \reffigure{pic-source:jargon-depot} et en \reffigure{pic-source:jargon-branches}.
 
 \begin{figure}
 	\centering
@@ -74,6 +74,7 @@ Le modèle centralisé donne l'avantage d'être simple à appréhender, c'est le
 Néanmoins, son inconvénient réside le fait que toutes les révisions soient stockées uniquement sur le dépôt.
 Si ce dernier n'est plus accessible, les clients de l'outil ne sont pas capables d'être autonomes et ne peuvent plus remplir leurs fonctions.
 
+\paragraph{}
 À ce modèle on oppose la gestion de versions dite \emph{décentralisée} qui, elle, implique qu'il n'y ait pas de dépôt unique répertoriant l'ensemble de révisions.
 En fait, chaque copie de travail est un dépôt à part entière contenant toutes révisions et que l'on synchronise régulièrement avec le dépôt considéré comme \og principal \fg.
 
@@ -83,7 +84,7 @@ En fait, chaque copie de travail est un dépôt à part entière contenant toute
 
 \subsubsection{Formation Subversion chez Rexel}
 
-Au même titre que la formation JIRA, j'ai également pu participer au début de mon stage à la formation Subversion donnée chez Rexel par \agulet.
+Au même titre que la formation JIRA, j'ai pu participer au début de mon stage à la formation Subversion donnée chez Rexel par \agulet.
 Je connaissais déjà très bien l'outil, j'ai principalement appris de la façon de le présenter à un client.
 
 

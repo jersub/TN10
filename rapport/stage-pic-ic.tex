@@ -4,16 +4,16 @@
 Le concept d'intégration continue consiste à tester automatiquement l'application tout au long de son développement.
 Cela permet de prévenir les régressions et de détecter facilement où et quand des erreurs ont été introduites.
 
-À l'échelle du développeur ou du chef de projet, lancer les tests d'un projet moyen doté une bonne couverture de tests prend beaucoup de temps.
+À l'échelle du développeur ou du chef de projet, lancer les tests d'un projet de taille moyenne doté une bonne couverture de tests prend beaucoup de temps.
 C'est pour cela que les jeux de tests sont lancés de manière complètement automatique par un outil nommé \emph{plateforme d'intégration continue} (PIC).
-Il est utilisé conjointement avec un système de gestion de version pour manipuler le code source.
+Il est utilisé conjointement avec un système de gestion de versions pour manipuler le code source.
 
 \paragraph{}
 En effet, pour chaque projet en cours de développement, la plateforme d'intégration continue surveille constamment si de nouveaux changements ont été introduits sur leur dépôt de code source respectif.
 À intervalle de temps régulier, elle reconstruit chaque projet ayant fait l'objet de modifications depuis la passe précédente.
 Les tests qui ont été écrits par les développeurs sont alors lancés.
 À l'issue de la passe de tests, un rapport est sauvegardé.
-Grâce au système de gestion de version, il est possible de savoir à quelle révision des bugs ou des régressions sont apparues.
+Grâce au système de gestion de versions, il est possible de savoir à quelle révision des bugs ou des régressions sont apparus.
  Enfin, l'état du projet -- en succès ou en échec -- est indiqué clairement aux visiteurs de la PIC.
 
 Cet état peut être communiqué aux personnes intéressées de manière plus directe.
@@ -44,9 +44,9 @@ La tendance récente de l'état du projet est même reportée via la métaphore 
 De base, la configuration du lancement des tests du projet s'effectue via de simples scripts shell UNIX ou batch Windows.
 Pour les projets Java, il est également possible de reposer sur des scripts Ant\footnote{Ant est un projet open source de la fondation Apache écrit en Java qui vise le développement d'un logiciel d'automatisation des opérations répétitives tout au long du cycle de développement logiciel, à l'instar des logiciels Make. Ant est principalement utilisé pour automatiser la construction de projets en langage Java, mais il peut être utilisé pour tout autre type d'automatisation dans n'importe quel langage.~\cite{ant}} ou Maven\footnote{Maven est un outil open source pour la gestion et l'automatisation de production des projets logiciels Java en général et Java~EE en particulier. L'objectif recherché est comparable au système Make sous UNIX : produire un logiciel à partir de ses sources, en optimisant les tâches réalisées à cette fin et en garantissant le bon ordre de fabrication. Il est semblable à l'outil Ant, mais fournit des moyens de configuration plus simples, eux aussi basés sur le format XML. Maven est géré par l'organisation Apache Software Foundation.~\cite{maven}}.
 
-L'exécution des tests peut être initié par différents moyens, comme des mécanismes de planification similaires au cron\footnote{cron est le nom d'un programme qui permet aux utilisateurs des systèmes UNIX d'exécuter automatiquement des scripts, des commandes ou des logiciels à une date et une heure spécifiées à l'avance, ou selon un cycle défini à l'avance.~\cite{cron}} ou une surveillance d'un dépôt de code source, entre autres.
+L'exécution des tests peut être initiée par différents moyens, comme des mécanismes de planification similaires au cron\footnote{cron est le nom d'un programme qui permet aux utilisateurs des systèmes UNIX d'exécuter automatiquement des scripts, des commandes ou des logiciels à une date et une heure spécifiées à l'avance, ou selon un cycle défini à l'avance.~\cite{cron}} ou une surveillance d'un dépôt de code source, entre autres.
 
-En outre, il est possible de distribuer les le lancement des tests de chaque projet sur des machines différentes.
+En outre, il est possible de distribuer le lancement des tests de chaque projet sur des machines différentes.
 Les projets sont configurés sur un serveur Jenkins maître qui peut redistribuer ses tâches sur des serveurs esclaves mis en place sur d'autres machines.
 
 \paragraph{}
@@ -59,7 +59,7 @@ On trouve notamment l'intégration avec Redmine, Subversion ou Selenium.
 
 \paragraph{}
 À noter que Jenkins peut également être utilisé pour autre chose que l'exécution de tests.
-Une autre utilisation concerne la construction ou la compilation\footnote{La compilation est l'action de traduire un langage (appelé le langage source) en un autre (le langage cible), généralement dans le but de créer un exécutable.~\cite{compilation}} régulière de projets de développement.
+Une utilisation alternative concerne la construction ou la compilation\footnote{La compilation est l'action de traduire un langage (appelé le langage source) en un autre (le langage cible), généralement dans le but de créer un exécutable.~\cite{compilation}} régulière de projets de développement.
 
 \paragraph{}
 Des captures d'écran de Jenkins sont accessibles en \refannexe{jenkins}.
